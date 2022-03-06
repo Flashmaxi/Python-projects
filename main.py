@@ -56,5 +56,5 @@ graph_value_update = {
 # gvu = requests.put(url=graph_value_update_endpoint, json=graph_value_update, headers=headers)
 # print(gvu.text)
 
-gdelete = requests.delete(url=graph_value_update_endpoint, json=graph_value_update, headers=headers)
+#gdelete = requests.delete(url=graph_value_update_endpoint, json=graph_value_update, headers=headers)
 print(gdelete.text)
