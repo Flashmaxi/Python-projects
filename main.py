@@ -1,39 +1,60 @@
-import turtle as turtle_module
-import random
+import requests
+from datetime import datetime
 
-turtle_module.colormode(255)
-tim = turtle_module.Turtle()
-tim.speed("fastest")
-tim.penup()
-tim.hideturtle()
-color_list = [(202, 164, 109), (238, 240, 245), (150, 75, 49), (223, 201, 135), (52, 93, 124), (172, 154, 40),
-              (140, 30, 19), (133, 163, 185), (198, 91, 71), (46, 122, 86), (72, 43, 35), (145, 178, 148), (13, 99, 71),
-              (233, 175, 164), (161, 142, 158), (105, 74, 77), (55, 46, 50), (183, 205, 171), (36, 60, 74), (18, 86, 90)
-              , (81, 148, 129), (148, 17, 20), (14, 70, 64), (30, 68, 100), (107, 127, 153), (174, 94, 97),
-              (176, 192, 209)]
-tim.setheading(225)
-tim.forward(300)
-tim.setheading(0)
-number_of_dots = 100
-
-for dot_count in range(1, number_of_dots + 1):
-    tim.dot(20, random.choice(color_list))
-    tim.forward(50)
-
-    if dot_count % 10 == 0:
-        tim.setheading(90)
-        tim.forward(50)
-        tim.setheading(180)
-        tim.forward(500)
-        tim.setheading(0)
+USERNAME = "eduka"
+TOKEN = "edohabits"
+pixela_endpoint = 'https://pixe.la/v1/users'
+ID = "g1"
 
 
+user_params = {
+    "token": TOKEN,
+    "username": USERNAME,
+    "agreeTermsOfService": "yes",
+    "notMinor": "yes"
+}
+
+# r = requests.post(url=pixela_endpoint, json=user_params)
+# print(r.json())
+
+graph_endpoint = f"{pixela_endpoint}/{USERNAME}/graphs"
+headers = {
+"X-USER-TOKEN": TOKEN
+}
+graph_config = {
+    "id": ID,
+    "name": "coding",
+    "unit": "hours",
+    "type": "int",
+    "color": "sora"
+
+}
+# rgc = requests.post(url=graph_endpoint, json=graph_config, headers=headers)
+# print(rgc.text)
+
+graph_value_endpoint = f"{pixela_endpoint}/{USERNAME}/graphs/{ID}"
+
+today = datetime.now()
+
+graph_value = {
+    "date": today.strftime("%Y%m%d"),
+    "quantity": "5",
 
 
+}
 
+# gvd = requests.post(url=graph_value_endpoint, json=graph_value, headers=headers)
+# print(gvd.text)
 
+graph_value_update_endpoint = f"{pixela_endpoint}/{USERNAME}/graphs/{ID}/20220306"
 
+graph_value_update = {
+    "quantity": "8",
 
+}
 
-screen = turtle_module.Screen()
-screen.exitonclick()
+# gvu = requests.put(url=graph_value_update_endpoint, json=graph_value_update, headers=headers)
+# print(gvu.text)
+
+gdelete = requests.delete(url=graph_value_update_endpoint, json=graph_value_update, headers=headers)
+print(gdelete.text)
